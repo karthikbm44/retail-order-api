@@ -27,5 +27,5 @@ jobs:
       - name: Run the application
         run: |
           node app.js &
-          sleep 5
-          curl http://localhost:1010
+          sleep 10
+          curl --retry 5 --retry-delay 2 http://localhost:1010
