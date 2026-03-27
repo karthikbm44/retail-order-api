@@ -25,37 +25,4 @@ jobs:
         run: npm test
 
       - name: Run the application
-        run: |
-          # Start server in background with output to file
-          node app.js > server.log 2>&1 &
-          SERVER_PID=$!
-
-          echo "Server PID: $SERVER_PID"
-          sleep 3
-
-          # Show what's in the log
-          echo "=== Server Log ==="
-          cat server.log
-          echo "=================="
-
-          # Check if process is still alive
-          if ! ps -p $SERVER_PID > /dev/null; then
-            echo "❌ Server process died immediately!"
-            exit 1
-          fi
-
-          # Try connecting with retries
-          for i in {1..8}; do
-            echo "Attempt $i..."
-            if timeout 2 curl -f http://localhost:1010/ 2>/dev/null; then
-              echo "✓ Success!"
-              kill $SERVER_PID 2>/dev/null || true
-              exit 0
-            fi
-            sleep 1
-          done
-
-          echo "❌ Could not connect to server"
-          echo "=== Final Server Log ==="
-          cat server.log
-          kill $SERVER_PID 2>/dev/null || true
+        run: node app.js
