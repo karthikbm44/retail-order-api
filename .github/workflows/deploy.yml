@@ -26,6 +26,17 @@ jobs:
 
       - name: Run the application
         run: |
-          node app.js &
-          sleep 10
-          curl --retry 5 --retry-delay 2 http://localhost:1010
+          node app.js > server.log 2>&1 &
+          SERVER_PID=$!
+          sleep 15
+
+          # Check if process is still running
+          if ps -p $SERVER_PID > /dev/null; then
+            echo "Server process is running (PID: $SERVER_PID)"
+            cat server.log
+            curl -v http://localhost:1010/
+          else
+            echo "Server process died!"
+            cat server.log
+            exit 1
+          fi
