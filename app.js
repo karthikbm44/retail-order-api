@@ -2,6 +2,8 @@ const express = require('express');
 const app = express();
 const port = 1010;
 
+app.use(express.json());
+
 app.get("/",(req,res)=>{
     res.send("Retail Order API is running");
 })
@@ -21,8 +23,6 @@ app.get("/orders",(req,res)=>{
     ])
 });
 
-app.use(express.json());
-
 app.listen(port,()=>{
     console.log(`Server is running on port ${port}`);
-})
+});
