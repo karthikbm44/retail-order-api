@@ -11,12 +11,13 @@ app.get("/orders",(req,res)=>{
         {
             "id": 1,
             "customerName": "John Doe",
-            status: "Processing"},
-            {
-                "id": 2,
+            "status": "Processing"
+        },
+        {
+            "id": 2,
             "customerName": "John devil",
-            status: "delivered"
-            }
+            "status": "delivered"
+        }
     ])
 });
 
